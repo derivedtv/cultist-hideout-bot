@@ -37,7 +37,7 @@ message.channel.send({embed: {
     },
     {
       name: "**Step 1**",
-      value: "Send ``!verify`` followed by your username into this channel (!verify Superninna). __**Misspelling your name will nullify your verification attempt.",
+      value: "Send ``!verify`` followed by your username into this channel (!verify Superninna). __**Misspelling your name will nullify your verification attempt.**__",
     },
     {
       name: `**Step 2**`,
