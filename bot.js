@@ -21,6 +21,36 @@ case "!ping":
 message.reply("Pong!")
 break;
 
+case "!verification":
+if(!message.member.roles.some(r=>["Coder"].includes(r.name)) )
+return;
+
+message.channel.send({embed: {
+  color: 0xff040b,
+  author: {
+    name: `Verification Tutorial`,
+    icon_url: client.user.avatarURL
+  },
+  fields: [{
+      name: "**How to verify**",
+      value: `When verifying, you must follow these steps perfectly in order to be verified. It is recommended you login to your RealmEye page before verifying.`,
+    },
+    {
+      name: "**Step 1**",
+      value: "Send ``!verify`` followed by your username into this channel (!verify Superninna). __**Misspelling your name will nullify your verification attempt.",
+    },
+    {
+      name: `**Step 2**`,
+      value: `After receiving the code, replace __**everything in the first line of your RealmEye description**__ with the code. Wait 90 seconds, and if you did everything right you will be verified!`,
+    },
+  ],
+  footer: {
+    text: "The bot will send you back your original RealmEye description",
+  }
+}
+});
+break;
+                 
 case "!finduser":
 let foundusr = args.splice(0).join(" ");
 
