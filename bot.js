@@ -162,4 +162,4 @@ snekfetch.get(rapi).then(r => {
 break;
 
          }})
-client.login('NDMyNTU3MTg0NDQ3MTUyMTMw.DavB2w.zC5QMtyI529TNURiVUmmKW_Fc8k');
+client.login('process.env.BOT_TOKEN');
