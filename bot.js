@@ -11,208 +11,6 @@ client.on('ready', function() {
     client.user.setActivity(`in a Lost Halls!`);
   });
 
-  // Sleep function, for delaying actions
-  function sleep(ms) {
-      return new Promise(function(resolve, reject) {
-          setTimeout(resolve, ms);
-      });
-  }
-   
-  function percent(lil, full) {
-      return (lil / full) * 100;
-  }
-   
-  function shuffle(a) {
-      for (let i = a.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-  }
-   
-  var queueChannel = '407250816592904192';
-  var raidLeaderChat = '417168779802443786';
-  var raidChannel = '407251403178901505';
-  // Wrap the entire source code in an asynchronous function
-  (async function run() {
-      console.log("Welcome to CultistBot!");
-      console.log("Starting event definitions");
-   
-      function buildContent(remainingTime) {
-          return `**__An AFK Check is starting. You will have ${afkCheckTime / 1000} seconds to react and get in the queue!__**
-  **React with the Spooky boi to be able to move to Raid.**
-  **React with Vial if you have Vial to open on the run.**
-  **React with the Cultist if you want to do cultist.**
-  **And with the LH key if you have a key**
-   
-  Always get in voice channel to get the groups.
-  <@&407245309232807936>
-   
-  Time remaining: ${remainingTime / 1000} seconds.`;
-          //**<@&407245309232807936>**
-      }
-      // afk-check command
-      client.on('message', async (msg) => {
-          if (msg.content.startsWith(":afk-check")) {
-  //            if (msg.channel.name == 'raid-info' || msg.channel.name == 'bot-testing' || msg.channel.name == 'bot-test') {
-                  if (msg.member.highestRole.position >= msg.guild.roles.get('407240648622604288').position) {
-                      var mesg = msg;
-                      var remaining = afkCheckTime;
-                      var msg = await msg.guild.channels.get('407249005173538816').send("<@&407245309232807936> An AFK check is starting shortly...");
-                      var botReactions = [];
-                      botReactions.push(await msg.react('407324790202957825'));
-                      botReactions.push(await msg.react('407325019031732244'));
-                      botReactions.push(await msg.react('407324867638198273'));
-                      botReactions.push(await msg.react('412677262845018112'));
-   
-                      // Countdown
-                      await msg.edit(buildContent(remaining));
-                      var steps = afkCheckTime / step;
-                      for (var i=0;i<steps;i++) {
-                          await sleep(step);
-                          remaining = remaining - step;
-                          await msg.edit(buildContent(remaining));
-                      }
-   
-                      // Notify about AFK check ending
-                      await msg.edit('AFK check has ended. You will be moved to appropriate voice channels. If you haven\'t won this one, stay tuned for a next one!');
-                      for (var i=0;i<botReactions.length;i++) {
-                          await botReactions[i].remove();
-                      }
-                      // Do magic with reactions
-                      // Get all users
-                      var gusers = {};
-                      var reactions = msg.reactions.array();
-                      for (var i=0;i<reactions.length;i++) {
-                          var users = reactions[i].users.array();
-                          for (var j=0;j<users.length;j++) {
-                              if (queueChannel.members.get(users[j].id) || raidChannel.members.get(users[j].id)) {
-                                  if (gusers[users[j].id]) {
-                                      gusers[users[j].id].push(reactions[i].emoji.id);
-                                  } else {
-                                      gusers[users[j].id] = [reactions[i].emoji.id];
-                                  }
-                              }
-                          }
-                      }
-                      botReactions.push(await msg.react('407324790202957825'));
-                      botReactions.push(await msg.react('407325019031732244'));
-                      botReactions.push(await msg.react('407324867638198273'));
-                      botReactions.push(await msg.react('412677262845018112'));
-                      console.log(gusers);
-                      var cultist = [];
-                      var groupA = [];
-                      var groupB = [];
-                      var cgroup = 0;
-                      for (var i in gusers) {
-                          if (cgroup === 0) {
-                              if (gusers[i].includes('407324790202957825') || gusers[i].includes('407324867638198273')) {
-                                  groupA.push(i);
-                                  cgroup = 1;
-                              }
-                          } else {
-                              if (gusers[i].includes('407324790202957825') || gusers[i].includes('407324867638198273')) {
-                                  groupB.push(i);
-                                  cgroup = 0;
-                              }
-                          }
-                      }
-                      for (var i in gusers) {
-                          if (gusers[i].includes('407324867638198273')) {
-                              cultist.push(i);
-                          }
-                      }
-                      // Get percentage
-                      if (percent(cultist, gusers) < 20) {
-                          for (var i in gusers) {
-                              if (!cultist.includes(i)) {
-                                  cultist.push(i);
-                                  if (!percent(cultist, gusers) < 20) {
-                                      break;
-                                  }
-                              }
-                          }
-                      }
-                      var promises = [];
-                      for (var i=0;i<groupA.length;i++) {
-                          promises.push(client.users.get(groupA[i]).send(cultist.includes(groupA[i]) ? "You are on group A. You will do Cultist Hideout." : "You are on group A and will do void."));
-                      }
-                      for (var i=0;i<groupB.length;i++) {
-                          promises.push(client.users.get(groupB[i]).send(cultist.includes(groupB[i]) ? "You are on group B. You will do Cultist Hideout." : "You are on group B and will do void."));
-                      }
-                      await Promise.all(promises);
-                      var ch = mesg.guild.channels.get(raidLeaderChat);
-                      var text = `**Afk check results:**\n\n**Group A**\n`;
-                      for (var i=0;i<groupA.length;i++) {
-                          text = `${text}<@${groupA[i]}>\n`;
-                      }
-                      text = `${text}\n**Group B**\n`;
-                      for (var i=0;i<groupB.length;i++) {
-                          text = `${text}<@${groupB[i]}>\n`;
-                      }
-                      text = `${text}\n**Cultist**\n`;
-                      for (var i=0;i<cultist.length;i++) {
-                          text = `${text}<@${cultist[i]}>\n`;
-                      }
-                      text = `${text}\n**Vial**\n`;
-                      for (var i in gusers) {
-                          if (gusers[i].includes('407325019031732244')) {
-                              text = `${text}<@${i}>\n`;
-                          }
-                      }
-                      text = `${text}\n**Key**\n`;
-                      for (var i in gusers) {
-                          if (gusers[i].includes('412677262845018112')) {
-                              text = `${text}<@${i}>\n`;
-                          }
-                      }
-                      await ch.send(text, {split: true});
-                      var promises = [];
-                      queueChannel.members.array().forEach(user => {
-                          if (!gusers[user.user.id]) {
-                              promises.push(user.setVoiceChannel('407265287130316800'));
-                          }
-                      });
-                      await Promise.all(promises);
-                  } else {
-                      msg.reply("You do not have appropriate permissions to run this command!");
-                  }
-    //          } else {
-      //            msg.reply("You cannot use this command here!");
-        //      }
-          }
-          if (msg.content.startsWith(':move')) {
-              if (msg.member.permissions.has('MANAGE_ROLES')) {
-                  var msg = await msg.channel.send("Moving people from Queue to Raid");
-                  var people = msg.guild.channels.get('407250816592904192').members.array();
-                  var promises = [];
-                  people.forEach(person => {
-                      promises.push(person.setVoiceChannel('407251403178901505'));
-                  });
-                  await Promise.all(promises);
-                  await msg.edit("Done!");
-              }
-          }
-          if (msg.content.startsWith(':eval')) {
-              if (msg.author.id === '102038103463567360') {
-                  var code = msg.content.substr(6);
-                  var resp = eval(code);
-                  msg.reply('Returned value is now in console.');
-                  console.log(resp);
-              } else {
-                  msg.reply("You cannot do this ;-;");
-              }
-          }
-          if (msg.content.startsWith(':help')) {
-              msg.channel.send(`**Cultist Bot commands:**
-   
-  \`:afk-check\` - Begin an afk check
-  \`:move\` - Move people from Queue to Doing LH | Raid
-  \`:eval\` - Bot coder (Rph) only | Execute Javascript code
-  \`:help\` - View this document`);
-          }
-      });
-
 client.on('message', function(message) {
     var args = message.content.split(" ");
     var cmd = args[0];
@@ -236,6 +34,20 @@ let founderusr = client.users.get("name", foundusr).id;
 message.channel.send(`<@${founderusr}>`)
 break;
 
+case "!movequeue":
+if(!message.member.roles.some(r=>["Administrator", ":ok_hand:", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+
+var msg = message.channel.send("Moving!")
+var people = client.channels.get('433161500467789834').members.array();
+var promises = [];
+people.forEach(person => {
+    promises.push(person.setVoiceChannel('433165707765874689'));
+});
+Promise.all(promises);
+
+break;
+                 
 case "!find":
 let users = client.users;
 let searchTerm = args[0];
