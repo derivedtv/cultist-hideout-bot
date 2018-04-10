@@ -1,8 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const snekfetch = require("snekfetch");
-const afkCheckTime = 70000;
-const step = 5000;
 
 client.on('ready', function() {
     console.log("Connected");
@@ -178,6 +176,5 @@ snekfetch.get(rapi).then(r => {
 })
          }
 break;
-         })
-        })    
+         })  
 client.login(process.env.BOT_TOKEN);
