@@ -84,7 +84,7 @@ let vialpopped = message.mentions.users.first();
 if(!vialpopped)
 return message.reply("Please mention a user to remove the vial role from.")
 
-message.guild.member(vialpopped).removeRole("432727399881244675");
+message.guild.member(vialpopped).removeRole("407241165293879317");
 
 message.channel.send("Vial removed from " + vialpopped);
 break;
@@ -95,7 +95,7 @@ let vialtaker = message.mentions.users.first();
 if(!vialtaker)
 return message.reply("Please mention a user to give the vial role to.")
 
-message.guild.member(vialtaker).addRole("432727399881244675");
+message.guild.member(vialtaker).addRole("407241165293879317");
 
 message.channel.send("Vial added to " + vialtaker);
 break;
@@ -154,7 +154,7 @@ snekfetch.get(rapi).then(r => {
 
   if(rdesc.includes(rcode))
   message.guild.member(message.author).setNickname(`${rname}`)
-  message.guild.member(message.author).addRole("432690702464581652")
+  message.guild.member(message.author).addRole("407245309232807936")
   message.author.send("You have successfully been verified!\nYour previous Realmeye description was:\n```" + brdesc + "```");
 })
 }, 90000);
