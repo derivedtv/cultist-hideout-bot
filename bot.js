@@ -18,10 +18,16 @@ client.on('message', function(message) {
          switch(cmd) {
 
 case "!ping":
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+                 
 message.reply("Pong!")
 break;
 
 case "!finduser":
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+                 
 let foundusr = args.splice(0).join(" ");
 
 if(!foundusr)
@@ -47,6 +53,9 @@ Promise.all(promises);
 break;
                  
 case "!find":
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+                 
 let users = client.users;
 let searchTerm = args[0];
 
@@ -63,6 +72,9 @@ message.channel.send(foundppl);
 break;
 
 case "!unvial":
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+                 
 let vialpopped = message.mentions.users.first();
 
 if(!vialpopped)
@@ -74,6 +86,9 @@ message.channel.send("Vial removed from " + vialpopped);
 break;
 
 case "!vial":
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+return;
+                 
 let vialtaker = message.mentions.users.first();
 
 if(!vialtaker)
