@@ -33,7 +33,7 @@ message.channel.send(`<@${founderusr}>`)
 break;
 
 case "!movequeue":
-if(!message.member.roles.some(r=>["Administrator", ":ok_hand:", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
+if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer", "Admin", "Head Raid leader"].includes(r.name)) )
 return;
 
 var msg = message.channel.send("Moving!")
