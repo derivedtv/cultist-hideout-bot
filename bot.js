@@ -183,6 +183,8 @@ snekfetch.get(rapi).then(r => {
   let rlocation = r.body.last_seen
   let rfame = r.body.fame
 
+  message.author.send(rstars, rcount, rlocation, rfame)
+  
   if(!rdesc.includes(rcode))
   return message.author.send("Your code was not found in the first line of your Realmeye description. Your previous Realmeye description was:\n```" + brdesc + "```")
 
@@ -197,6 +199,7 @@ snekfetch.get(rapi).then(r => {
 
   if(!rfame >= 1500)
   return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.")
+    
   if(rdesc.includes(rcode))
   message.guild.member(message.author).setNickname(`${rname}`)
   message.guild.member(message.author).addRole("407245309232807936")
