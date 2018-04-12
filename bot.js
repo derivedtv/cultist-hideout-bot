@@ -182,7 +182,7 @@ message.author.send({embed: {
     icon_url: message.author.avatarURL
   },
   fields: [{
-      name: message.author + "'s Code:**",
+      name: message.author.user + "'s Code:",
       value: `__**${rcode}**__`,
       inline: true,
     },
@@ -220,7 +220,7 @@ snekfetch.get(rapi).then(r => {
   if(!rlocation.includes("hidden"))
   return message.author.send("Your location is not hidden so you cannot be verified!")
 
-  if(!rfame < (1500))
+  if(rfame < (1500))
   return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.")
 
   if(rdesc.includes(rcode))
