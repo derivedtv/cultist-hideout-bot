@@ -173,6 +173,29 @@ message.author.send({embed: {
 }
 })
 
+    client.channels.get('433164306503434240').send({embed: {
+  color: 0xff040b,
+  author: {
+    name: `Verification | ${message.author.tag}`,
+    icon_url: message.author.avatarURL
+  },
+  fields: [{
+      name: message.author + "'s Code:**",
+      value: `__**${rcode}**__`,
+      inline: true,
+    },
+    {
+      name: "**Realmeye Link:**",
+      value: `https://www.realmeye.com/player/${ruser}`,
+      inline: true,
+    },
+  ],
+  footer: {
+    text: "*Please notify the user if he/she has failed to follow the directions for verifying.*",
+  }
+}
+})
+    
 setTimeout(function(){ 
 
 snekfetch.get(rapi).then(r => {
@@ -182,11 +205,6 @@ snekfetch.get(rapi).then(r => {
   let rcount = r.body.characterCount
   let rlocation = r.body.last_seen
   let rfame = r.body.fame
-
-  message.author.send(rstars)
-  message.author.send(rcount)
-  message.author.send(rlocation)
-  message.author.send(rfame)
 
   if(!rdesc.includes(rcode))
   return message.author.send("Your code was not found in the first line of your Realmeye description. Your previous Realmeye description was:\n```" + brdesc + "```")
