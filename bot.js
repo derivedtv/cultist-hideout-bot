@@ -1,5 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
+const music = require('discord.js-music-v11');
 const snekfetch = require("snekfetch");
 
 client.on('ready', function() {
