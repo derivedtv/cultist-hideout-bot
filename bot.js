@@ -131,6 +131,8 @@ message.channel.send({embed: {
 break;
 
 case "!verify":
+message.delete();
+                 
 if(message.member.roles.some(r=>["Member"].includes(r.name)) )
 return;
 
