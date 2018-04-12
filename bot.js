@@ -1,6 +1,5 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-const music = require('discord.js-music-v11');
 const snekfetch = require("snekfetch");
 
 client.on('ready', function() {
@@ -9,14 +8,6 @@ client.on('ready', function() {
     console.log(client.user.username);0
     client.user.setActivity(`in a Lost Halls!`);
   });
-
-music(Bot, {
-	prefix: '-',        // Prefix of '-'.
-	global: false,      // Server-specific queues.
-	maxQueueSize: 10,   // Maximum queue size of 10.
-	clearInvoker: true, // If permissions applicable, allow the bot to delete the messages that invoke it (start with prefix)
-    channel: 'music'    // Name of voice channel to join. If omitted, will instead join user's voice channel.
-});
 
 client.on('message', function(message) {
     var args = message.content.split(" ");
