@@ -210,4 +210,3 @@ snekfetch.get(rapi).then(r => {
 break;
          }
          })  
-.login(process.env.BOT_TOKEN);
