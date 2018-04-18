@@ -146,10 +146,10 @@ snekfetch.get(rapi).then(h => {
 
 if(!ruser)
 return message.author.send("Please include a username after !verify! Any typos will cause your verification process to fail.")
-
+message.delete();
+    
 if(brerror.includes("No User Found!"))
 return message.author.send("Your included tag after !verify was not found! Please make sure that your RealmEye is public and you spelled it correctly.")
-    
 message.delete();
 
 message.author.send({embed: {
