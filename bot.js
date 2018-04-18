@@ -142,8 +142,9 @@ let rapi = "http://www.tiffit.net/RealmInfo/api/user?u=" + ruser + "&f=c;"
 
 snekfetch.get(rapi).then(h => {
   let brdesc = h.body.description;
-  let brerror = h.body.error
-
+  let brerror = h.body.error;
+  let bname = h.body.name;
+    
 if(!ruser)
 return message.author.send("Please include a username after !verify! Any typos will cause your verification process to fail.")
 message.delete();
@@ -152,6 +153,7 @@ if(brerror.includes("No User Found!"))
 return message.author.send("Your included tag after !verify was not found! Please make sure that your RealmEye is public and you spelled it correctly.")
 message.delete();
 
+if(bname.includes(ruser))
 message.author.send({embed: {
   color: 0xff040b,
   author: {
