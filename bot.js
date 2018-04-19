@@ -142,9 +142,29 @@ let rapi = "http://www.tiffit.net/RealmInfo/api/user?u=" + ruser + "&f=c;"
 
 snekfetch.get(rapi).then(h => {
   let brdesc = h.body.description;
-    
+  let rstars = r.body.rank
+  let rcount = r.body.characterCount
+  let rlocation = r.body.last_seen
+  let rfame = r.body.fame
+  
 if(!ruser)
 return message.author.send("Please include a username after !verify! Any typos will cause your verification process to fail.")
+message.delete();
+    
+if(rstars < (30))
+return message.author.send("You do not have enough stars to be verified! You have " + rstars + ". You need __**30**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
+message.delete();
+    
+if(rcount < (2))
+return message.author.send("You do not have enough characters to be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
+message.delete();
+    
+if(!rlocation.includes("hidden"))
+return message.author.send("Your location is not hidden so you cannot be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
+message.delete();
+    
+if(rfame < (1500))
+return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
 message.delete();
     
 message.author.send({embed: {
@@ -202,25 +222,9 @@ setTimeout(function(){
 snekfetch.get(rapi).then(r => {
   let rdesc = r.body.description;
   let rname = r.body.name
-  let rstars = r.body.rank
-  let rcount = r.body.characterCount
-  let rlocation = r.body.last_seen
-  let rfame = r.body.fame
 
   if(!rdesc.includes(rcode))
   return message.author.send("Your code was not found in the first line of your Realmeye description. Your previous Realmeye description was:\n```" + brdesc + "```")
-
-  if(rstars < (30))
-  return message.author.send("You do not have enough stars to be verified! You have " + rstars + ". You need __**30**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
-  if(rcount < (2))
-  return message.author.send("You do not have enough characters to be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
-  if(!rlocation.includes("hidden"))
-  return message.author.send("Your location is not hidden so you cannot be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
-  if(rfame < (1500))
-  return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
 
   if(rdesc.includes(rcode))
   message.guild.member(message.author).setNickname(`${rname}`)
