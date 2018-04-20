@@ -140,6 +140,9 @@ let ruser = args.slice(0).join("");
 let rcode = ("CH" + Math.floor(Math.random(11111) * 99999));
 let rapi = "http://www.tiffit.net/RealmInfo/api/user?u=" + ruser + "&f=c;"
 
+if(!ruser)
+    message.author.send("Please include a name after !verify. Any typo will ruin the verification process.")
+    
 snekfetch.get(rapi).then(h => {
   let brdesc = h.body.description;
     
