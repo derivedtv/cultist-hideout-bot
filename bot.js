@@ -146,6 +146,10 @@ return message.author.send("Please include a name after !verify. Any typo will r
                  
 snekfetch.get(rapi).then(h => {
   let brdesc = h.body.description;
+  let brname = h.body.name;
+    
+if(brname.includes("No user found!"))
+    return message.author.send("Your username was not found! Make sure your RealmEye is public to everyone!")
     
 message.author.send({embed: {
   color: 0xff040b,
