@@ -173,10 +173,26 @@ return message.author.send("Please include a name after !verify. Any typo will r
 snekfetch.get(rapi).then(h => {
   let brdesc = h.body.description;
   let brname = h.body.name;
-    
+  let brstars = h.body.rank
+  let brcount = h.body.characterCount
+  let brlocation = h.body.last_seen
+  let brfame = h.body.fame
+
 if(brname.includes("No user found!"))
     return message.author.send("Your username was not found! Make sure your RealmEye is public to everyone!")
     
+if(rstars < (30))
+    return message.author.send("You do not have enough stars to be verified! You have " + rstars + ". You need __**30**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
+    
+if(rcount < (2))
+    return message.author.send("You do not have enough characters to be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
+
+if(!rlocation.includes("hidden"))
+    return message.author.send("Your location is not hidden so you cannot be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
+    
+if(rfame < (1500))
+    return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
+
 message.author.send({embed: {
   color: 0xff040b,
   author: {
@@ -231,32 +247,12 @@ setTimeout(function(){
 
 snekfetch.get(rapi).then(r => {
   let rdesc = r.body.description;
-  let rname = r.body.name
-  let rstars = r.body.rank
-  let rcount = r.body.characterCount
-  let rlocation = r.body.last_seen
-  let rfame = r.body.fame
   
 if(!rdesc.includes(rcode))
 return message.author.send("Your code was not found in the first line of your Realmeye description. Your previous Realmeye description was:\n```" + brdesc + "```")
 
-if(!ruser)
-return message.author.send("Please include a username after !verify! Any typos will cause your verification process to fail.")
-    
-if(rstars < (30))
-return message.author.send("You do not have enough stars to be verified! You have " + rstars + ". You need __**30**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
-    
-if(rcount < (2))
-return message.author.send("You do not have enough characters to be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
-if(!rlocation.includes("hidden"))
-return message.author.send("Your location is not hidden so you cannot be verified!\nYour previous Realmeye description was:\n```" + brdesc + "```")
-    
-if(rfame < (1500))
-return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
 if(rdesc.includes(rcode))
-message.guild.member(message.author).setNickname(`${rname}`)
+message.guild.member(message.author).setNickname(`${rname}.`)
 message.guild.member(message.author).addRole("414723546896400385")
 message.author.send("You have successfully been verified!\nYour previous Realmeye description was:\n```" + brdesc + "```");
 })
