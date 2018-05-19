@@ -263,5 +263,5 @@ message.author.send("You have successfully been verified!\nYour previous Realmey
 })
 break;
          }
-         })
+         })  
 client.login(process.env.BOT_TOKEN);
