@@ -33,7 +33,8 @@ client.channels.get("447520517977800717").send({embed: {
     }
   }
   });
-    
+})
+
 client.on('message', function(message) {
     var args = message.content.split(" ");
     var cmd = args[0];
