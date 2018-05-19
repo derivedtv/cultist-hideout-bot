@@ -9,6 +9,31 @@ client.on('ready', function() {
     client.user.setActivity(`in a Lost Halls!`);
   });
 
+client.on('guildMemberAdd', member => {
+  
+client.channels.get("447520517977800717").send({embed: {
+    color: 0xff040b,
+    author: {
+      name: `New User | ${member.user.tag}`,
+      icon_url: member.user.avatarURL
+    },
+    fields: [{
+        name: "__**Username:**__",
+        value: `${member.user}`,
+        inline: true,
+      },
+      {
+        name: "__**Account Created:**__",
+        value: `${member.user.createdAt}`,
+        inline: true,
+      }
+    ],
+    footer: {
+      text: "© ok hand#6327",
+    }
+  }
+  });
+    
 client.on('message', function(message) {
     var args = message.content.split(" ");
     var cmd = args[0];
@@ -43,10 +68,10 @@ if(!message.member.roles.some(r=>["Raid Leader", "Trial Raid Leader", "Officer",
 return;
 
 var msg = message.channel.send("Moving!")
-var people = client.channels.get('433161500467789834').members.array();
+var people = client.channels.get('414729394897027072').members.array();
 var promises = [];
 people.forEach(person => {
-    promises.push(person.setVoiceChannel('433165707765874689'));
+    promises.push(person.setVoiceChannel('414729502275534851'));
 });
 Promise.all(promises);
 
@@ -80,7 +105,7 @@ let vialpopped = message.mentions.users.first();
 if(!vialpopped)
 return message.reply("Please mention a user to remove the vial role from.")
 
-message.guild.member(vialpopped).removeRole("407241165293879317");
+message.guild.member(vialpopped).removeRole("446324262412877826");
 
 message.channel.send("Vial removed from " + vialpopped);
 break;
@@ -94,7 +119,7 @@ let vialtaker = message.mentions.users.first();
 if(!vialtaker)
 return message.reply("Please mention a user to give the vial role to.")
 
-message.guild.member(vialtaker).addRole("407241165293879317");
+message.guild.member(vialtaker).addRole("446324262412877826");
 
 message.channel.send("Vial added to " + vialtaker);
 break;
@@ -137,7 +162,7 @@ if(message.member.roles.some(r=>["Member"].includes(r.name)) )
 return;
 
 let ruser = args.slice(0).join("");
-let rcode = ("CH" + Math.floor(Math.random(11111) * 99999));
+let rcode = ("NS" + Math.floor(Math.random(11111) * 99999));
 let rapi = "http://www.tiffit.net/RealmInfo/api/user?u=" + ruser + "&f=c;"
 
 if(!ruser)
@@ -178,7 +203,7 @@ message.author.send({embed: {
 }
 })
 
-    client.channels.get('433164306503434240').send({embed: {
+    client.channels.get('447528074460790792').send({embed: {
   color: 0xff040b,
   author: {
     name: `Verification | ${message.author.tag}`,
@@ -231,7 +256,7 @@ return message.author.send("Your do not have enough fame to be verified! You hav
 
 if(rdesc.includes(rcode))
 message.guild.member(message.author).setNickname(`${rname}`)
-message.guild.member(message.author).addRole("407245309232807936")
+message.guild.member(message.author).addRole("414723546896400385")
 message.author.send("You have successfully been verified!\nYour previous Realmeye description was:\n```" + brdesc + "```");
 })
 }, 90000);
