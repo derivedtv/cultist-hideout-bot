@@ -192,7 +192,8 @@ if(!rlocation.includes("hidden"))
     
 if(rfame < (1500))
     return message.author.send("Your do not have enough fame to be verified! You have " + rfame + ". You need __**1500**__.\nYour previous Realmeye description was:\n```" + brdesc + "```")
-
+else {
+    
 message.author.send({embed: {
   color: 0xff040b,
   author: {
@@ -261,4 +262,4 @@ message.author.send("You have successfully been verified!\nYour previous Realmey
 break;
          }
          })  
-client.login(process.env.BOT_TOKEN);
+//client.login(process.env.BOT_TOKEN);
